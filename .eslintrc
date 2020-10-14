@@ -13,7 +13,8 @@
   ],
   "rules": {
     "no-console": 1,
-    "prettier/prettier": 2
+    "prettier/prettier": 2,
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
   "env": {
     "browser": true,
