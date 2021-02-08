@@ -26,3 +26,11 @@ export function buildTree<T>(values: T[]): INode<T> {
   doBuild(root, 0, values)
   return root
 }
+
+export function depth<T>(root?: INode<T>): number {
+  if (!root) {
+    return 0
+  }
+
+  return Math.max(depth(root.left), depth(root.right)) + 1
+}

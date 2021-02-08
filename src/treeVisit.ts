@@ -1,4 +1,4 @@
-import { INode } from './tree'
+import { depth, INode } from './tree'
 
 export function preorderVisit<T>(root: INode<T>) {
   const values: T[] = []
@@ -128,4 +128,43 @@ export function postorderVisitNoRecursion<T>(node: INode<T>): T[] {
   }
 
   return values
+}
+
+export function bfs<T>(root: INode<T>): T[] {
+  const queue: INode<T>[] = [root]
+  const results: T[] = []
+
+  while (queue.length > 0) {
+    const n = queue.shift()
+    if (!n) continue
+
+    results.push(n.value)
+    if (n.left) queue.push(n.left)
+    if (n.right) queue.push(n.right)
+  }
+
+  return results
+}
+
+function getLevel<T>(node: INode<T> | undefined, level: number): T[] {
+  if (!node) return []
+  if (level === 1) {
+    return [node.value]
+  }
+
+  return getLevel(node.left, level - 1).concat(getLevel(node.right, level - 1))
+}
+
+export function bfsRecursion<T>(root: INode<T>): T[] {
+  const dep = depth(root)
+
+  function getResults(level: number): T[] {
+    if (level > dep) {
+      return []
+    }
+
+    return getLevel(root, level).concat(getResults(level + 1))
+  }
+
+  return getResults(0)
 }
