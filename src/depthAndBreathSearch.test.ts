@@ -4,7 +4,10 @@
 
 import { buildTree, INode } from './tree'
 
-const tree = buildTree([1, 2, 3, null, 5, null, 4])
+let tree: INode<number | null>
+beforeAll(() => {
+  tree = buildTree([1, 2, 3, null, 5, null, 4])
+})
 
 function getRightSideViewBFS(root: INode<number | null>): number[] {
   let currentLevelEnd = -1
@@ -35,4 +38,25 @@ function getRightSideViewBFS(root: INode<number | null>): number[] {
 
 test('should return right side when use BFS', () => {
   expect(getRightSideViewBFS(tree)).toEqual([1, 3, 4])
+})
+
+function getRightSideViewDFS(root: INode<number | null>): number[] {
+  const result: number[] = []
+
+  function doDFS(node: INode<number | null>, level: number) {
+    if (level === result.length) {
+      result.push(node.value || -1)
+    }
+
+    if (node.right) doDFS(node.right, level + 1)
+    if (node.left) doDFS(node.left, level + 1)
+  }
+
+  doDFS(root, 0)
+
+  return result
+}
+
+test('should return right side when use DFS', () => {
+  expect(getRightSideViewDFS(tree)).toEqual([1, 3, 4])
 })
