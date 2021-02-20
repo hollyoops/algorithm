@@ -34,6 +34,10 @@ function randomStr() {
 }
 
 test('randomString', () => {
+  const randomString = randomStr()
   // eslint-disable-next-line no-console
-  console.log(randomStr())
+  console.log('The random string is: ', randomString)
+
+  const reg = new RegExp('[a-z][a-z0-9]{7}')
+  expect(reg.test(randomString)).toBe(true)
 })
